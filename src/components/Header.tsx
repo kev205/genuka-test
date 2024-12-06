@@ -21,7 +21,7 @@ export default function Header() {
       </div>
       <button
         style={{ backgroundColor: "#E5ECF9" }}
-        className="flex items-center justify-center hadow-md rounded-md py-3 px-4 text-center text-sm transition-all shadow-sm focus:text-white focus:bg-slate-800 focus:border-slate-800 active:border-slate-800 active:text-white active:bg-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        className="flex items-center justify-center hover:shadow-md rounded-md py-3 px-4 text-center text-sm focus:text-white focus:bg-slate-800 focus:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

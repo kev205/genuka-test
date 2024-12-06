@@ -3,6 +3,7 @@ import "./globals.css";
 import { Outfit } from "next/font/google";
 
 import Navigation from "@/components/Navigation";
+import { TaskListProvider } from "@/context/TaskListContext";
 
 export const metadata: Metadata = {
   title: "Genuka",
@@ -20,7 +21,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={outfit.className}>
         <Navigation />
-        {children}
+        <TaskListProvider>{children}</TaskListProvider>
       </body>
     </html>
   );

@@ -1,4 +1,10 @@
-export const statuses = ["Open", "Closed", "Archived"];
+import { TaskStatus } from "./models";
+
+export const statuses: TaskStatus[] = [
+  { id: "open", label: "Open" },
+  { id: "closed", label: "Closed" },
+  { id: "archived", label: "Archived" },
+];
 
 export const tabs = [
   {
@@ -6,5 +12,5 @@ export const tabs = [
     label: "Messages",
   },
   { id: "today", label: "Today's Task" },
-  { id: "last", label: "Last Activity" },
+  { id: "activities", label: "Last Activity" },
 ];
