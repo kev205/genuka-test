@@ -33,7 +33,7 @@ function TaskList() {
     <div>
       <TaskListHeader />
       <Reorder.Group values={list} onReorder={onReorder} axis="y">
-        {list?.map((task, index) => (
+        {list?.map((task) => (
           <Reorder.Item value={task} key={task.id}>
             <TaskCard item={task} />
           </Reorder.Item>

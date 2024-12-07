@@ -10,12 +10,12 @@ function TaskListHeader() {
 
   const [pending, startTransition] = useTransition();
 
-  const onClick = useCallback((id?: string) => {
+  const onClick = (id?: string) => {
     // in case of huge tasks list
     startTransition(() => {
-      setActiveHeader?.(id);
+      setActiveHeader?.(id as string);
     });
-  }, []);
+  };
 
   return (
     <div className="flex items-center justify-between">

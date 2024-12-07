@@ -4,13 +4,17 @@ export interface TaskStatus {
   label: string; // status label. ex: Open
 }
 
+interface Project {
+  title: string;
+}
+
 export interface Task {
   id: string;
   title: string;
-  project: any;
+  project: Project;
   startAt?: string;
   endAt?: string;
-  users?: any[];
+  users?: string[];
   status: TaskStatus;
   completed?: boolean;
 }

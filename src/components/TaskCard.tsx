@@ -5,11 +5,7 @@ import AvatarStack from "./AvatarStack";
 import { classNames } from "@/lib/classUtil";
 import { useTaskList } from "@/context/TaskListContext";
 
-export default function TaskCard({
-  ref,
-  item,
-  props,
-}: { ref?: any; item: Task } & any) {
+export default function TaskCard({ item }: { item: Task }) {
   const { markAsCompleted } = useTaskList();
 
   const toRender = item.users?.slice(0, Math.min(3, item.users.length));
@@ -20,11 +16,7 @@ export default function TaskCard({
   };
 
   return (
-    <div
-      ref={ref}
-      className="flex flex-col rounded-lg bg-white shadow-sm p-8 my-4"
-      {...props}
-    >
+    <div className="flex flex-col rounded-lg bg-white shadow-sm p-8 my-4">
       <div className="pb-8 m-0 mb-8 border-b border-gray-300 ">
         <div className="flex items-center justify-between p-0">
           <div>
