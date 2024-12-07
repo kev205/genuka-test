@@ -3,7 +3,7 @@
 import { useTaskList } from "@/context/TaskListContext";
 import { classNames } from "@/lib/classUtil";
 import { statuses } from "@/lib/constants";
-import { memo, useCallback, useTransition } from "react";
+import { memo, useTransition } from "react";
 
 function TaskListHeader() {
   const { items, activeHeader, setActiveHeader } = useTaskList();
@@ -29,7 +29,7 @@ function TaskListHeader() {
           key={status.id}
           className={classNames(
             "group flex-1 flex items-center justify-center text-sm font-medium text-gray-300 gap-2",
-            status.id === "all" && "border-r-2 border-gray-300"
+            status.id === "all" ? "border-r-2 border-gray-300" : ""
           )}
           onClick={() => onClick(status.id)}
           role="tab"

@@ -32,8 +32,14 @@ interface TaskListContextType {
   showAddTask?: boolean;
   setShowAddTask?: Dispatch<SetStateAction<boolean>>;
 }
+const isLocalStorageAvailable =
+  typeof window !== "undefined" && window.localStorage;
 
-const storage = localStorage; // storage class
+let storage: Storage;
+
+if (isLocalStorageAvailable) {
+  storage = localStorage;
+}
 
 export const TaskListContext = createContext<TaskListContextType>({
   items: {},
@@ -57,13 +63,13 @@ export function TaskListProvider({ children }: PropsWithChildren) {
   const [showAddTask, setShowAddTask] = useState(false);
 
   useEffect(() => {
-    const tasksStr = storage.getItem("tasks");
+    const tasksStr = storage?.getItem("tasks");
     if (tasksStr) {
       const savedTasks: Task[] = JSON.parse(tasksStr);
       setSource(savedTasks);
     } else {
       setSource(tasks);
-      storage.setItem("tasks", JSON.stringify(tasks));
+      storage?.setItem("tasks", JSON.stringify(tasks));
     }
   }, []);
 
@@ -81,7 +87,7 @@ export function TaskListProvider({ children }: PropsWithChildren) {
   };
 
   useEffect(() => {
-    const orders = JSON.parse(storage.getItem("orders") ?? JSON.stringify({}));
+    const orders = JSON.parse(storage?.getItem("orders") ?? JSON.stringify({}));
     const data = statuses
       .map((status) => {
         const list = source.filter((task) => task.status.id === status.id);
@@ -108,7 +114,7 @@ export function TaskListProvider({ children }: PropsWithChildren) {
 
     data["all"] = { total: source.length, items: source }; // add tata for `all` filter
     setItems(data);
-    storage.setItem("tasks", JSON.stringify(source)); // save new data in storage
+    storage?.setItem("tasks", JSON.stringify(source)); // save new data in storage
   }, [source]);
 
   // reorder list
@@ -116,14 +122,14 @@ export function TaskListProvider({ children }: PropsWithChildren) {
     (list: Task[], tab: string = "all") => {
       if (tab === "all") {
         setSource(list);
-        storage.setItem("tasks", JSON.stringify(list));
+        storage?.setItem("tasks", JSON.stringify(list));
       } else {
         setItems({ ...items, [tab]: { total: list.length, items: list } });
         // save new order for this list/tab
         const oldOrder = JSON.parse(
-          storage.getItem("orders") ?? JSON.stringify({})
+          storage?.getItem("orders") ?? JSON.stringify({})
         );
-        storage.setItem(
+        storage?.setItem(
           "orders",
           JSON.stringify({
             ...oldOrder,

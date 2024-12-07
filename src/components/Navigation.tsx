@@ -3,8 +3,9 @@
 import { classNames } from "@/lib/classUtil";
 import { tabs } from "@/lib/constants";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Navigation() {
+function NavigationState() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
@@ -44,5 +45,13 @@ export default function Navigation() {
         ))}
       </ul>
     </div>
+  );
+}
+
+export default function Navigation() {
+  return (
+    <Suspense>
+      <NavigationState />
+    </Suspense>
   );
 }

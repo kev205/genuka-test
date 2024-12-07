@@ -23,7 +23,7 @@ export default function TaskCard({ item }: { item: Task }) {
             <h1
               className={classNames(
                 "text-2xl font-medium",
-                item.completed && "line-through"
+                item.completed ? "line-through" : ""
               )}
             >
               {item.title}
