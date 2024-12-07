@@ -20,7 +20,7 @@ export default function TaskCard({
   };
 
   return (
-    <li
+    <div
       ref={ref}
       className="flex flex-col rounded-lg bg-white shadow-sm p-8 my-4"
       {...props}
@@ -69,6 +69,6 @@ export default function TaskCard({
         </div>
         <AvatarStack items={toRender} remaining={remaining} />
       </div>
-    </li>
+    </div>
   );
 }
