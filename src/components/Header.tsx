@@ -1,10 +1,13 @@
 "use client";
 
+import { useTaskList } from "@/context/TaskListContext";
 import { tabs } from "@/lib/constants";
+import { formatDate } from "@/lib/dateUtil";
 import { useSearchParams } from "next/navigation";
 
 export default function Header() {
   const searchParams = useSearchParams();
+  const { showAddTask, setShowAddTask } = useTaskList();
 
   return (
     <div className="flex items-center justify-between p-4">
@@ -17,11 +20,12 @@ export default function Header() {
             )?.label
           }
         </h1>
-        <h2 className="text-gray-500">{new Date().toDateString()}</h2>
+        <h2 className="text-gray-500">{formatDate(new Date())}</h2>
       </div>
       <button
         style={{ backgroundColor: "#E5ECF9" }}
         className="flex items-center justify-center hover:shadow-md rounded-md py-3 px-4 text-center text-sm focus:text-white focus:bg-slate-800 focus:border-slate-800 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        onClick={() => setShowAddTask?.(!showAddTask)}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

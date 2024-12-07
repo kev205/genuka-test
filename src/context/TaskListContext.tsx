@@ -29,6 +29,8 @@ interface TaskListContextType {
   setActiveHeader?: Dispatch<SetStateAction<string>>;
   markAsCompleted?: (id: string) => void;
   reOrder?: (list: Task[], tab?: string) => void;
+  showAddTask?: boolean;
+  setShowAddTask?: Dispatch<SetStateAction<boolean>>;
 }
 
 const storage = localStorage; // storage class
@@ -52,6 +54,7 @@ export function TaskListProvider({ children }: PropsWithChildren) {
   const [activeHeader, setActiveHeader] = useState("all");
   const [source, setSource] = useState<Task[]>([]);
   const [items, setItems] = useState<HeaderCount>({});
+  const [showAddTask, setShowAddTask] = useState(false);
 
   useEffect(() => {
     const tasksStr = storage.getItem("tasks");
@@ -157,6 +160,8 @@ export function TaskListProvider({ children }: PropsWithChildren) {
         setActiveHeader,
         markAsCompleted,
         reOrder,
+        showAddTask,
+        setShowAddTask,
       }}
     >
       {children}

@@ -6,9 +6,11 @@ import { memo, startTransition, useCallback, useEffect, useState } from "react";
 import TaskListHeader from "./TaskListHeader";
 import { Reorder } from "framer-motion";
 import { Task } from "@/lib/models";
+import AddTask from "./AddTask";
 
 function TaskList() {
-  const { items, activeHeader, reOrder } = useTaskList();
+  const { items, activeHeader, reOrder, showAddTask, setShowAddTask } =
+    useTaskList();
 
   const [list, setList] = useState<Task[]>([]);
 
@@ -25,6 +27,8 @@ function TaskList() {
     [activeHeader]
   );
 
+  const close = () => setShowAddTask?.(false);
+
   return (
     <div>
       <TaskListHeader />
@@ -35,6 +39,7 @@ function TaskList() {
           </Reorder.Item>
         ))}
       </Reorder.Group>
+      {showAddTask && <AddTask close={close} />}
     </div>
   );
 }
