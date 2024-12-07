@@ -1,3 +1,9 @@
+export interface TaskStatus {
+  // pour eviter les differences genre All, all, Open, open, etc...
+  id: string; // status id. ex: open
+  label: string; // status label. ex: Open
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -5,6 +11,6 @@ export interface Task {
   startAt?: string;
   endAt?: string;
   users?: any[];
-  status?: string;
-  checked?: boolean;
+  status: TaskStatus;
+  completed?: boolean;
 }

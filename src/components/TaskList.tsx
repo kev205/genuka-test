@@ -1,30 +1,47 @@
-import { tasks } from "@/__mock__/tasks";
-import TaskCard from "./TaskCard";
-import { statuses } from "@/lib/constants";
-import { classNames } from "@/lib/classUtil";
+"use client";
 
-export default function TaskList() {
+import { useTaskList } from "@/context/TaskListContext";
+import TaskCard from "./TaskCard";
+import { memo, startTransition, useCallback, useEffect, useState } from "react";
+import TaskListHeader from "./TaskListHeader";
+import { Reorder } from "framer-motion";
+import { Task } from "@/lib/models";
+import AddTask from "./AddTask";
+
+function TaskList() {
+  const { items, activeHeader, reOrder, showAddTask, setShowAddTask } =
+    useTaskList();
+
+  const [list, setList] = useState<Task[]>([]);
+
+  useEffect(() => {
+    setList(items[activeHeader ?? "all"]?.items ?? []);
+  }, [items, activeHeader]);
+
+  const onReorder = useCallback(
+    (newList: Task[]) => {
+      startTransition(() => {
+        reOrder?.(newList, activeHeader);
+      });
+    },
+    [activeHeader]
+  );
+
+  const close = () => setShowAddTask?.(false);
+
   return (
     <div>
-      <div className="flex items-center justify-between">
-        {["All", ...statuses].map((status) => (
-          <button
-            key={status}
-            className={classNames(
-              "flex-1 flex items-center justify-center text-sm font-medium text-gray-300 hover:text-customBlue focus:text-customBlue gap-2",
-                status === "All" && "border-r-2 border-gray-300"
-            )}
-          >
-            <span>{status}</span>
-            <span className="flex items-center justify-center text-sm font-medium text-white bg-gray-300 hover:bg-customBlue focus:bg-customBlue relative h-8 w-8 rounded-full border-2">
-              {status === "All" ? 10 : 5}
-            </span>
-          </button>
+      <TaskListHeader />
+      <Reorder.Group values={list} onReorder={onReorder} axis="y">
+        {list?.map((task, index) => (
+          <Reorder.Item value={task} key={task.id}>
+            <TaskCard item={task} />
+          </Reorder.Item>
         ))}
-      </div>
-      {tasks.map((task) => (
-        <TaskCard key={task.id} item={task} />
-      ))}
+      </Reorder.Group>
+      {showAddTask && <AddTask close={close} />}
     </div>
   );
 }
+
+export default memo(TaskList);

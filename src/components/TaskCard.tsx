@@ -1,31 +1,49 @@
+"use client";
+
 import { Task } from "@/lib/models";
 import AvatarStack from "./AvatarStack";
 import { classNames } from "@/lib/classUtil";
+import { useTaskList } from "@/context/TaskListContext";
 
-export default function TaskCard({ item }: { item: Task }) {
+export default function TaskCard({
+  ref,
+  item,
+  props,
+}: { ref?: any; item: Task } & any) {
+  const { markAsCompleted } = useTaskList();
+
   const toRender = item.users?.slice(0, Math.min(3, item.users.length));
   const remaining = item.users ? item.users.length - 3 : 0;
 
+  const flipCompleted = () => {
+    markAsCompleted?.(item.id);
+  };
+
   return (
-    <div className="flex flex-col rounded-lg bg-white shadow-sm p-8 my-4">
+    <div
+      ref={ref}
+      className="flex flex-col rounded-lg bg-white shadow-sm p-8 my-4"
+      {...props}
+    >
       <div className="pb-8 m-0 mb-8 border-b border-gray-300 ">
         <div className="flex items-center justify-between p-0">
           <div>
             <h1
               className={classNames(
                 "text-2xl font-medium",
-                !!item.checked && "line-through"
+                item.completed && "line-through"
               )}
             >
               {item.title}
             </h1>
             <h2 className="text-gray-400 text-lg mt-2">{item.project.title}</h2>
           </div>
-          <div
+          <button
             className={classNames(
               "flex items-center justify-center w-12 h-12 rounded-full",
-              item.checked ? "bg-customBlue" : "border border-gray-300"
+              item.completed ? "bg-customBlue" : "border border-gray-300"
             )}
+            onClick={flipCompleted}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -41,13 +59,13 @@ export default function TaskCard({ item }: { item: Task }) {
                 d="M5 13l4 4L19 7"
               />
             </svg>
-          </div>
+          </button>
         </div>
       </div>
       <div className="flex items-center justify-between p-0">
-        <div>
+        <div className="sm:flex gap-4">
           <p className="text-gray-700">Today</p>
-          <p className="text-sm text-gray-400 mt-2">{`${item.startAt} - ${item.endAt}`}</p>
+          <p className="text-gray-400">{`${item.startAt} - ${item.endAt}`}</p>
         </div>
         <AvatarStack items={toRender} remaining={remaining} />
       </div>
