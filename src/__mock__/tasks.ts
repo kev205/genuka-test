@@ -11,7 +11,7 @@ const usersPool = [
   "https://i1.sndcdn.com/artworks-000486414654-mt7qdt-t500x500.jpg",
 ];
 
-export let tasks: Task[] = Array.from({ length: 35 }, (_, index) => {
+export const tasks: Task[] = Array.from({ length: 35 }, (_, index) => {
   const id = (index + 1).toString();
   return {
     id,
