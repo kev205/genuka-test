@@ -2,7 +2,7 @@ export default function AvatarStack({
   items,
   remaining,
 }: {
-  items?: any[];
+  items?: string[];
   remaining: number;
 }) {
   return (
